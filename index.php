@@ -214,8 +214,11 @@ session_start();
         text-decoration: none;
     }
 </style>
+<!--ddd-->
 
-
+<?php
+//////ponemos un comentario a modo de seguir evaluando los cambios a futuro
+?>
 <!--logo-->
 <a href="index.php" onClick="usuario()"><img src="imagenes/logo.jpeg" style="height:50px;width:50px"></a>
 
@@ -249,7 +252,7 @@ session_start();
 
     error_reporting(0);
 
-    include ("conexion.php");
+    include("conexion.php");
 
     ?>
 
@@ -646,7 +649,7 @@ session_start();
         </table>
 
     <?php } ?>
-    <?php include ("receta.php"); ?>
+    <?php include("receta.php"); ?>
 
 
 
@@ -659,7 +662,7 @@ session_start();
 
 
 
-<?php include ("asi_sistema/info/footer.php"); ?>
+<?php include("asi_sistema/info/footer.php"); ?>
 
 <!--
 triggers
