@@ -215,7 +215,9 @@ session_start();
     }
 </style>
 
-
+<?php
+echo "holita...estamos practicando git , en caso de romper el codigo . siempre podremos volver a nuestros cambios anteirores sin temos a joder";
+?>
 <!--logo-->
 <a href="index.php" onClick="usuario()"><img src="imagenes/logo.jpeg" style="height:50px;width:50px"></a>
 
@@ -249,7 +251,7 @@ session_start();
 
     error_reporting(0);
 
-    include ("conexion.php");
+    include("conexion.php");
 
     ?>
 
@@ -646,7 +648,7 @@ session_start();
         </table>
 
     <?php } ?>
-    <?php include ("receta.php"); ?>
+    <?php include("receta.php"); ?>
 
 
 
@@ -659,7 +661,7 @@ session_start();
 
 
 
-<?php include ("asi_sistema/info/footer.php"); ?>
+<?php include("asi_sistema/info/footer.php"); ?>
 
 <!--
 triggers
