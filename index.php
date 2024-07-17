@@ -214,11 +214,7 @@ session_start();
         text-decoration: none;
     }
 </style>
-
-<?php
-echo "holita...estamos practicando git , en caso de romper el codigo . siempre podremos volver a nuestros cambios anteirores sin temor a joder nada de nada 
-por tanto seguimos realizando cambios y no pasa absolutamente nada de nai";
-?>
+<!--ddd-->
 <!--logo-->
 <a href="index.php" onClick="usuario()"><img src="imagenes/logo.jpeg" style="height:50px;width:50px"></a>
 
