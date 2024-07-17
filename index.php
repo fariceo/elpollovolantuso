@@ -215,6 +215,10 @@ session_start();
     }
 </style>
 <!--ddd-->
+
+<?php
+//////ponemos un comentario a modo de seguir evaluando los cambios a futuro
+?>
 <!--logo-->
 <a href="index.php" onClick="usuario()"><img src="imagenes/logo.jpeg" style="height:50px;width:50px"></a>
 
