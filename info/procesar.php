@@ -300,7 +300,7 @@ if ($_POST['buscar_deudor'] != "") {
 
         ?>
 
-        <!--busqueda de deudores--->
+        <!--busqueda de deudoresveveveveveve--->
 
 <?php if ($_POST['buscar_usuario'] != 1 && $_POST['buscar_usuario'] != "") { ?>
 <table>
