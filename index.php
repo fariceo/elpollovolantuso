@@ -218,7 +218,7 @@ session_start();
 
 <?php
 //////ponemos un comentario a modo de seguir evaluando los cambios a futuro
-echo "byrito empieza a ganar miles de dolares ";
+echo "byrito empieza a ganar miles de dolares, la abundancia y prosperidad empieza a brotar los frutos,gracias Dios ";
 ?>
 <!--logo-->
 <a href="index.php" onClick="usuario()"><img src="imagenes/logo.jpeg" style="height:50px;width:50px"></a>
