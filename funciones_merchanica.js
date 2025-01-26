@@ -414,7 +414,7 @@ function listo(e) {
 
     function ver_historial() {
 
-        // alert();
+        // alert();/*
         $.ajax({
             type: 'POST',
             url: 'ver_historial.php',
@@ -908,6 +908,28 @@ function cerrar_sesion() {
         success: function (result) {
             $("body").html(result);
             //$("#menu_carta").css("display","none");
+        }
+
+    });
+}
+
+function redireccionarPagina() {
+    window.location = "inicio.php";
+  }
+
+
+
+  function ventas(e) {
+    //alert(e + "hola");
+    $.ajax({
+        type: "POST",
+        //url: "admin.php",
+        url: "grafica_ventas_merchanica.php",
+        // url: "admin.php",
+        data: { info_fecha_ventas: e },
+
+        success: function (result) {
+            $("body").html(result);
         }
 
     });

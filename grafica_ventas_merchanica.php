@@ -14,12 +14,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="funciones_merchanica.js"></script>
-<script> 
-    function redireccionarPagina() {
-  window.location = "inicio.php";
-}
 
-</script>
     <!-- Agrega la biblioteca jQuery (opcional) -->
     <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>-->
 
@@ -32,21 +27,7 @@
 
 
         });
-        function ventas(e) {
-            //alert(e + "hola");
-            $.ajax({
-                type: "POST",
-                url: "admin.php",
-                //url: "grafica_ventas.php",
-                // url: "admin.php",
-                data: { info_fecha_ventas: e },
-
-                success: function (result) {
-                    $("body").html(result);
-                }
-
-            });
-        }
+        
     </script>
     <style>
         #grafica {
@@ -93,6 +74,8 @@
 
     <a onClick="ver_historial()"><img src="../../imagenes/historial.png" style="width:25px;height:25px"></a>
 
+
+    <div id="contenedor">
     <?php
     //$info_historial_ventas = "";
     
@@ -110,8 +93,8 @@
         echo "Lunes : " . $info_historial_ventas = $lunes_actual;
 
 
-        $buscar_ventas = mysqli_query($conexion, "SELECT DISTINCT ventas.fecha FROM ventas  WHERE estado!=2 AND fecha BETWEEN '$info_historial_ventas' AND '$fecha' ORDER BY `fecha` ASC");
-        $total_ventas = mysqli_query($conexion, "SELECT fecha, SUM(total) AS suma_total FROM ventas WHERE fecha BETWEEN '$info_historial_ventas' AND '$fecha' GROUP BY fecha");
+        $buscar_ventas = mysqli_query($conexion2, "SELECT DISTINCT ventas.fecha FROM ventas  WHERE estado!=2 AND fecha BETWEEN '$info_historial_ventas' AND '$fecha' ORDER BY `fecha` ASC");
+        $total_ventas = mysqli_query($conexion2, "SELECT fecha, SUM(total) AS suma_total FROM ventas WHERE fecha BETWEEN '$info_historial_ventas' AND '$fecha' GROUP BY fecha");
 
     }
 
@@ -132,8 +115,8 @@
         $info_historial_ventas = $mes_actual;
 
 
-        $buscar_ventas = mysqli_query($conexion, "SELECT DISTINCT ventas.fecha FROM ventas  WHERE estado!=2 AND fecha BETWEEN '$info_historial_ventas' AND '$fecha' ORDER BY `fecha` ASC");
-        $total_ventas = mysqli_query($conexion, "SELECT fecha, SUM(total) AS suma_total FROM ventas WHERE fecha BETWEEN '$info_historial_ventas' AND '$fecha' GROUP BY fecha");
+        $buscar_ventas = mysqli_query($conexion2, "SELECT DISTINCT ventas.fecha FROM ventas  WHERE estado!=2 AND fecha BETWEEN '$info_historial_ventas' AND '$fecha' ORDER BY `fecha` ASC");
+        $total_ventas = mysqli_query($conexion2, "SELECT fecha, SUM(total) AS suma_total FROM ventas WHERE fecha BETWEEN '$info_historial_ventas' AND '$fecha' GROUP BY fecha");
     }
 
 
@@ -155,10 +138,10 @@
 
 
                 if ($_POST['info_fecha_ventas'] == "año") {
-                    $buscar_ventas = mysqli_query($conexion, "SELECT DISTINCT ventas.fecha FROM ventas  WHERE estado!=2 AND fecha BETWEEN '2023-01-01' AND '$fecha' ORDER BY `fecha` ASC");
+                    $buscar_ventas = mysqli_query($conexion2, "SELECT DISTINCT ventas.fecha FROM ventas  WHERE estado!=2 AND fecha BETWEEN '2023-01-01' AND '$fecha' ORDER BY `fecha` ASC");
 
                 } else {
-                    $buscar_ventas = mysqli_query($conexion, "SELECT DISTINCT ventas.fecha FROM ventas  WHERE estado!=2 AND fecha BETWEEN '$info_historial_ventas' AND '$fecha' ORDER BY `fecha` ASC");
+                    $buscar_ventas = mysqli_query($conexion2, "SELECT DISTINCT ventas.fecha FROM ventas  WHERE estado!=2 AND fecha BETWEEN '$info_historial_ventas' AND '$fecha' ORDER BY `fecha` ASC");
 
                 }
 
@@ -189,10 +172,10 @@
                     backgroundColor: 'rgba(0,153, 0, 0.5)',
                     data: [<?php
                     if ($_POST['info_fecha_ventas'] == "año") {
-                        $total_ventas = mysqli_query($conexion, "SELECT fecha, SUM(total) AS suma_total FROM ventas WHERE fecha BETWEEN '2023-01-01' AND '$fecha' GROUP BY fecha");
+                        $total_ventas = mysqli_query($conexion2, "SELECT fecha, SUM(total) AS suma_total FROM ventas WHERE fecha BETWEEN '2023-01-01' AND '$fecha' GROUP BY fecha");
 
                     } else {
-                        $total_ventas = mysqli_query($conexion, "SELECT fecha, SUM(total) AS suma_total FROM ventas WHERE fecha BETWEEN '$info_historial_ventas' AND '$fecha' GROUP BY fecha");
+                        $total_ventas = mysqli_query($conexion2, "SELECT fecha, SUM(total) AS suma_total FROM ventas WHERE fecha BETWEEN '$info_historial_ventas' AND '$fecha' GROUP BY fecha");
                     }
                     while ($muestra_total_ventas = mysqli_fetch_array($total_ventas)) {
                         $total = round($muestra_total_ventas['suma_total'], 2);
@@ -263,7 +246,7 @@
 
         } ?>
     </div>
-
+    </div>
 
 </body>
 
