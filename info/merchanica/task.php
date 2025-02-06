@@ -65,7 +65,7 @@ if ($_POST['intro_tarea'] != "") {
 ?>
 
 
-<h3>Tareas</h3>
+<h3>Servicio</h3>
 <!---->
 <?php if ($_POST['tarea'] == "" || $_POST['tarea'] == 0) { ?>
 
@@ -79,38 +79,36 @@ if ($_POST['intro_tarea'] != "") {
         <?php
         // if ($_POST['a'] != '') {
     
-        $buscar_clientes = mysqli_query($conexion2, "SELECT DISTINCT cliente FROM tareas");
+        $buscar_clientes = mysqli_query($conexion2, "SELECT DISTINCT cliente FROM tareas WHERE estado=10");
 
         while ($clientes = mysqli_fetch_array($buscar_clientes)) {
 
 
             ?>
 
-            <h2 style="background:#d6d6d6;width:100%" onclick="otra_tarea('<?php echo ucfirst($clientes[cliente]) ?>')">
+            <h2 style="background:#e9ffff ;width:100%" onclick="otra_tarea('<?php echo ucfirst($clientes[cliente]) ?>')">
                 <?php echo ucfirst($clientes['cliente']) . "<hr>"; ?>
             </h2>
             <br>
             <div>
-                <a id="desplegar_ventana_<?php echo $cliente['cliente'] ?>" style="
-            width: 0;
-            height: 0;
-            border-left: 5px solid transparent;
-            border-right: 5px solid transparent;
-            border-top: 10px solid #3498db; /* Color del triángulo */
-            float:right;
-            margin-right:20px;
-        " onclick="ampliar_ventana('<?php echo $clientes[cliente] ?>')">
-                </a>
-                <a id="plegar_ventana_<?php echo $clientes['cliente'] ?>" style="
-            width: 0;
-            height: 0;
-            border-left: 5px solid transparent;
-            border-right: 5px solid transparent;
-            border-bottom: 10px solid #3498db; /* Color del triángulo */
-            float:right;
-            margin-right:20px;
-        " onclick="tareas()">
-                </a>
+         
+            <?php
+                // Número de productos agregados en el carrito
+                $buscar_n_tareas = mysqli_query($conexion2, "SELECT COUNT(tarea) AS n_tarea FROM tareas WHERE cliente='$clientes[cliente]' AND estado=0");
+                $n_tareas = mysqli_fetch_assoc($buscar_n_tareas);
+
+
+                echo  $n_tareas['n_tarea']
+                ?>
+              
+                <a onclick="ampliar_ventana('<?php echo $clientes[cliente] ?>')"><img src="https://static.vecteezy.com/system/resources/previews/007/770/289/non_2x/hammer-and-wrench-icon-isolated-on-white-background-free-vector.jpg" style="width:25px;height:25px"></a>
+                <a id="n_tareas"></a>
+
+                <a onclick="ampliar_ventana('<?php echo $clientes[cliente] ?>')"><img src="toolgreen.png" style="width:25px;height:25px"></a>
+                <a id="n_tareas"></a>
+
+                <a onclick="ampliar_ventana('<?php echo $clientes[cliente] ?>')"><img src="toolsred.png" style="width:25px;height:25px"></a>
+                <a id="n_tareas"></a>
 
                 <?php
                 // Número de productos agregados en el carrito
@@ -122,6 +120,7 @@ if ($_POST['intro_tarea'] != "") {
                 <a style="float:right;margin-right:25px"
                     onclick="ver_pedido('<?php echo $clientes[cliente] ?>')"><?php echo "Nº Articulos : " . $n_productos['n_producto']; ?><img
                         src="../../imagenes/carrito.png" style="widht:25;height: 25px;"></a><br>
+
             </div>
 
 

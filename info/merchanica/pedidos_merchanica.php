@@ -16,7 +16,7 @@ include("conexion_merchanica.php");
     if ($_POST['pedido_cliente'] != "") {
 
         // $pedido_cliente=ucfirst($_POST['pedido_cliente']);
-    
+    echo "<h4>Articulos</h4>";
         $buscar_pedidos = mysqli_query($conexion2, "SELECT * FROM pedidos WHERE usuario='$_POST[pedido_cliente]' AND estado!='2'");
 
 
@@ -38,11 +38,17 @@ include("conexion_merchanica.php");
                 <?php $total += $totall; ?>
             </table>
 
+
+           
+            <?php
+        }
+?>
+
+
             <?php
         }
 
-
-    }
+    
     //fin de diseño temporal*********
     ?>
 

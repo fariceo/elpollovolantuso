@@ -110,6 +110,8 @@ if ($_POST['ampliar_cliente'] != "") {
     ?>
 
     <br>
+
+    <h4><?php echo $_POST['ampliar_cliente']; ?></h4>
     <?php
     $buscar_tareas = mysqli_query($conexion2, "SELECT * FROM tareas WHERE cliente ='$_POST[ampliar_cliente]' ");
 
@@ -120,23 +122,21 @@ if ($_POST['ampliar_cliente'] != "") {
         <table>
 
 
-            <tr>
-                <td><?php echo $tareas['tarea'] ?></td>
-
-            </tr>
-
             <!--si no hay mecanico no hay checkbox de tarea lista por parte del mecanico-->
 
 
-            <?php if ($tareas['mecanico'] != 'default') { ?>
+            
                 <tr>
+                <td style="width:95%""><?php echo $tareas['tarea'] ?></td>
+
+                <?php if ($tareas['mecanico'] != 'default') { ?>
                     <?php if ($tareas['estado'] != 10) { ?>
                         <td><input type="checkbox" onClick="tarea_lista('<?php echo $tareas['id'] ?>')" /></td>
                     <?php } else { ?>
                         <td><input type="checkbox" checked /></td>
 
                     <?php } ?>
-                    <td><button style="color:red;width:10px">X</button></td>
+                    
 
                 </tr>
             <?php } ?>
@@ -146,7 +146,7 @@ if ($_POST['ampliar_cliente'] != "") {
                 <!--mecanico acepta tareea-->
                 <?php if ($tareas['mecanico'] == "default") { ?>
                     <td><button
-                            onclick="aceptar_tarea('<?php echo $_SESSION[usuario] ?>','<?php echo $tareas[id] ?>','<?php echo $tareas[tarea]?>')">Mecanico</button>
+                            onclick="aceptar_tarea('<?php echo $_SESSION[usuario] ?>','<?php echo $tareas[id] ?>','<?php echo $tareas[tarea]?>')">Aceptar Tarea</button>
                     </td>
 
                 <?php } else { ?>
@@ -404,7 +404,7 @@ if (isset($_POST['iniciar_sesion'])) {
             // La redirección se maneja en el cliente (jQuery) ahora
             echo "<p style='color: green;'>Inicio de sesión exitoso. Redirigiendo...</p>"; // Mensaje de éxito
             // header("Location: inicio.php");  No es necesario aquí
-            exit;
+       
         } else {
             echo "<p style='color: red;'>La contraseña es incorrecta.</p>";
         }
@@ -423,5 +423,21 @@ if($_POST['usuario_sesion']!=""){
 
     $_SESSION['usuario'] = $_POST['usuario_sesion'];
     Location("inicio.php");
+}
+?>
+
+
+
+<!---cotizar servicio-->
+<?php
+
+if($_POST["precio_servicio"]!=""){
+
+    echo $_POST["servicio"];
+echo $_POST["precio_servicio"];
+
+    $cotizar_servicio= mysqli_query($conexion2, "INSERT INTO `pedidos` (`usuario`, `producto`, `cantidad`, `precio`, `total`, `estado`, `delivery`, `metodo_pago`, `fecha`, `hora`) VALUES ('$_POST[cliente]','$_POST[servicio]','1','$_POST[precio_servicio]','$_POST[precio_servicio]','0','0','default','default','$fecha','$hora')");
+
+
 }
 ?>
