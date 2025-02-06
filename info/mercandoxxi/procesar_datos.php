@@ -1,5 +1,5 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-<script></script>
+<script src="funciones_mercandoxxi.js"></script>
 <?php
 
 $conect = mysqli_connect("localhost", "root", "clave", "volantuso");
@@ -28,9 +28,16 @@ if ($_POST['buscar_producto'] != "") {
             <tr>
                 <td><?php echo $producto["producto"]; ?></td>
                 <td><?php echo " $ ".$producto["total"]; ?></td>
+
+                <?php
+                
+                echo "<script>$('#precio').html('$producto[total]')</script>";
+
+                echo "<script>$('#total_producto').html('$producto[total]*$('#total_producto').val()')</script>";
+                ?>
             </tr>
             <tr>
-                <td><button>+</button></td>
+                <td><button onclick="agregar('<?php echo $producto['producto']?>')">+</button></td>
             </tr>
         </table>
 
@@ -67,7 +74,7 @@ if($_POST['buscar_usuario']!=""){
     $buscar_usuario = mysqli_query($conexion, "SELECT DISTINCT usuario FROM mandados WHERE usuario like '%" . $_POST['buscar_usuario'] . "%'");
 
     while($usuario=mysqli_fetch_array($buscar_usuario)) {
-        echo $usuario['usuario'];
+        echo "<br>".$usuario['usuario'];
     }
 }
 

@@ -1,5 +1,9 @@
 <?php //include("conexion_merchanica.php"); 
 session_start(); ?>
+
+<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   
 <script src="funciones_merchanica.js"></script>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
@@ -61,7 +65,7 @@ if ($_POST['buscar_cliente'] != "") {
             <tr>
                 <td style="width:150px"><?php echo "<br>" . $tareas_cliente['tarea']; ?></td>
                 <td> <button style="color:red;width:10px"
-                        onclick="eliminar_tarea('<?php echo $tareas_cliente[id] ?>')">X</button></td>
+                        onclick="eliminar_tarea('<?php echo $tareas_cliente['id'] ?>')">X</button></td>
             </tr>
         </table>
 
@@ -126,7 +130,7 @@ if ($_POST['ampliar_cliente'] != "") {
             <?php if ($tareas['mecanico'] != 'default') { ?>
                 <tr>
                     <?php if ($tareas['estado'] != 10) { ?>
-                        <td><input type="checkbox" onClick="tarea_lista('<?php echo $tareas[id] ?>')" /></td>
+                        <td><input type="checkbox" onClick="tarea_lista('<?php echo $tareas['id'] ?>')" /></td>
                     <?php } else { ?>
                         <td><input type="checkbox" checked /></td>
 
@@ -257,7 +261,7 @@ if ($_POST['actualizar_cantidad'] != "") {
     <br>
     <h3>Usuario</h3>
     <a style='width:200px'>
-        <?php echo $_POST['usuario'] ?>
+        <?php echo $_POST['usuario']; ?>
     </a>
     <table>
 
@@ -353,17 +357,19 @@ if ($_POST['actualizar_cantidad'] != "") {
 
 
 <!---registrar_usuario-->
-<?php if (isset($_POST["email"])) {
+<?php if (isset($_POST["empresa"])) {
 
 
     $password_hashed = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
 
-    $registrar_usuario = mysqli_query($conexion2, "INSERT INTO `usuarios_registrados` (`usuario`,`nombre`,`saldo`,`email`,`telefono`,`empresa`,`pasword`) VALUES ('$_POST[usuario]','$_POST[usuario]','0','$_POST[email]','$_POST[telefono]','$_POST[empresa]',' $password_hashed')");
+    $registrar_usuario = mysqli_query($conexion2, "INSERT INTO `usuarios_registrados` (`usuario`,`nombre`,`saldo`,`email`,`telefono`,`empresa`,`contraseña`) VALUES ('$_POST[usuario]','$_POST[usuario]','0','$_POST[email]','$_POST[telefono]','$_POST[empresa]',' $password_hashed')");
     //$registrar_usuario = mysqli_query($conexion2, "INSERT INTO `usuarios_registrados` (`id`, `usuario`, `nombre`, `saldo`, `email`, `telefono`, `empresa`, `pasword`) VALUES ('1', 'test', 'test', '1.5', 'brionariomen@gmail.com', '123456', 'volantuso', ' $password_hashed')");
 
     $_SESSION['usuario'] = $_POST['usuario'];
     header("Location:inicio.php");
+
+  
 }
 
 ?>
@@ -378,4 +384,43 @@ if ($_POST["usuario_acepto_tarea"] != "") {
 
 }
 
+?>
+
+<?php
+
+if (isset($_POST['iniciar_sesion'])) {
+    $email = mysqli_real_escape_string($conexion2, $_POST['email']);
+    $password = trim($_POST['password']);
+
+    $query = "SELECT usuario, contraseña FROM usuarios_registrados WHERE email = '$email'"; // Campo correcto: contraseña
+    $result = mysqli_query($conexion2, $query);
+
+    if ($result && mysqli_num_rows($result) > 0) {
+        $userData = mysqli_fetch_assoc($result);
+
+        if (password_verify($password, $userData['contraseña'])) { // Verificar contra el hash
+            $_SESSION['usuario'] = $userData['usuario'];
+            // La redirección se maneja en el cliente (jQuery) ahora
+            echo "<p style='color: green;'>Inicio de sesión exitoso. Redirigiendo...</p>"; // Mensaje de éxito
+            // header("Location: inicio.php");  No es necesario aquí
+            exit;
+        } else {
+            echo "<p style='color: red;'>La contraseña es incorrecta.</p>";
+        }
+    } else {
+        echo "<p style='color: red;'>El correo no está registrado.</p>";
+    }
+}
+
+?>
+
+
+
+<?php
+
+if($_POST['usuario_sesion']!=""){
+
+    $_SESSION['usuario'] = $_POST['usuario_sesion'];
+    Location("inicio.php");
+}
 ?>

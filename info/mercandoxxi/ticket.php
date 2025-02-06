@@ -33,6 +33,19 @@
                 }
 
             });
+
+
+            $.ajax({
+                    type: 'POST',
+                    //url:'menu_clientes.php',
+                    url: 'ticket.php',
+                    data: { buscar_usuario: $("#usuario").val() },
+                    success: function (result) {
+                        $("#contenedor").html(result);
+                        //$("#menu_carta").css("display","none");
+                    }
+
+                });
         }
 
 
@@ -82,6 +95,7 @@
 
                 });
 
+
         }
 
     </script>
@@ -114,9 +128,9 @@ $conect = mysqli_connect("localhost", "root", "clave", "volantuso");
             <br>
             <input type="text" placeholder="Cantidad" id="cantidad" style="width:50px;" />
             X $
-            <a>0.00</a>
+            <a id="precio">0.00</a>
 
-            = $ <a>0</a>
+            = $ <a id="total_producto">0</a>
 
             <a id="total"></a>
             <br>

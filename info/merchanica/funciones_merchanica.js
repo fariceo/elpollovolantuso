@@ -434,21 +434,21 @@ function listo(e) {
 
 
     function iniciarSesion() {
-            var email = $('#email').val();
-            var password = $('#password').val();
-alert(email+" "+password);
-            $.ajax({
-                type: 'POST',
-                url: 'procesar_login.php',
-                data: { email: email, password: password },
-                success: function(response) {
-                    $('#message').html(response);
-                },
-                error: function() {
-                    alert("Ocurrió un error. Intente de nuevo.");
+        var email = $("#email").val();
+        var password = $("#password").val();
+
+        $.ajax({
+            type: "POST",
+            url: "procesar_merchanica.php",
+            data: { email: email, password: password, iniciar_sesion: 1 }, // Indicador de inicio de sesión
+            success: function(response) {
+                $("#message").html(response); // Mostrar mensajes de error o éxito
+                if (response.indexOf("inicio.php") !== -1) { // Verificar redirección
+                    window.location.href = "inicio.php"; // Redirigir manualmente si es necesario
                 }
-            });
-        }
+            }
+        });
+    }
 
     function registrar_usuario(e) {
         // alert(2);
@@ -934,3 +934,8 @@ function redireccionarPagina() {
 
     });
 }
+
+
+
+////
+
