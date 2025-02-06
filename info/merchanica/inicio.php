@@ -9,6 +9,7 @@ session_start(); ?>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
     <script src="funciones_merchanica.js"></script>
+    <script src="funciones_merchanica2.js"></script>
     <script>
 
 
@@ -23,13 +24,23 @@ session_start(); ?>
 
 <body>
     <?php
+    session_start();
+
+    echo $_POST['usuario_sesion'];
+
+    ///INICIAR SESION
 
     //$_SESSION['usuario']="gato";
-    echo 'Usuario :' . $_SESSION['usuario']; ?>
+   // echo 'Usuario :' . $_SESSION['usuario']; ?>
+
+    ID : <input type="text" placeholder="Usuario" onchange="usuario(1)" id="usuario_sesion"/>
 
     <a onClick="cerrar_sesion()" style="float: right;margin:right:20px ;">Cerrar Sesion</a>
 
     <?php
+echo "<br>".$_SESSION['usuario'];
+
+
 
     /*
 
@@ -52,7 +63,7 @@ session_start(); ?>
     <!--botonera-->
     <div style="text-align:center">
 
-        <a href="inicio.php">inicio</a>
+        <a href="inicio.php" <img src="../../imagenes/tareas.png" style="width:25px;height:25px">>inicio</a>
         <!--<a><img src="../../imagenes/carrito.png" style="width:25px;height:25px"></a>-->
         <a onClick="tareas()"><img src="../../imagenes/tareas.png" style="width:25px;height:25px"></a>
         <a onClick="cobros()"><img src="../../imagenes/pago.png" style="width:25px;height:25px"></a>
