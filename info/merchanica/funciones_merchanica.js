@@ -262,31 +262,21 @@ function cobros() {
 
 
 
-    //$('[id^=plegar_ventana_]').hide();
+  
     //$('[id^=desplegar_ventana_]').hide();
 
     //$("id^=plegar_ventana_").hide(); // Esto no es válido, debe corregirse.
 
     function ampliar_ventana(e) {
-        // Oculta todos los contenedores de tareas
-        $('[id^=tareas_]').hide();
-
-        // Muestra el contenedor del cliente seleccionado
-        $('#tareas_' + e).show();
-    // Alterna la visibilidad de los botones desplegar/plegar para el cliente seleccionado
-                $('#plegar_ventana_' + e).show();
-                $('#plegar_ventana_' + e).focus();
-                $('#desplegar_ventana_' + e).hide();
-                $('[id^=desplegar_ventana_]').hide();
-        // Realiza la solicitud AJAX para cargar las tareas del cliente seleccionado
+            // Realiza la solicitud AJAX para cargar las tareas del cliente seleccionado
         $.ajax({
             type: 'POST',
             url: 'procesar_merchanica.php',
             data: { ampliar_cliente: e, tarea: 0 },
             success: function (result) {
                 // Inserta el resultado en el contenedor correspondiente
-                $('#tareas_' + e).html(result);
-                //$('#tareas_' + e).focus();
+               // $('#tareas_' + e).html(result);
+             $("#contenedor").html(result);
 
             
             },
@@ -937,5 +927,25 @@ function redireccionarPagina() {
 
 
 
-////
+////cotizar Servicios
+
+function cotizar_servicio(e,f) {
+
+    alert(e+ " " +f+" "+$("#precio_servicio_"+f).val());
+
+    var precio_servicio=parseFloat($("#precio_servicio_"+f).val());
+    $.ajax({
+        type: "POST",
+        //url: "admin.php",
+        url: "procesar_merchanica.php",
+        // url: "admin.php",
+        data: { servicio:e,precio_servicio:$("#precio_servicio").val(),cliente:f },
+
+        success: function (result) {
+            $("#contenedor").html(result);
+        }
+
+    });
+}
+
 

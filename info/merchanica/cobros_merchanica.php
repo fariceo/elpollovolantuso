@@ -111,7 +111,7 @@ $hora = date("G:i:s");
 
 <body>
 
-<h3 style="text-align: center;color:white;background:black">Cobros & Pagos</h3>
+<!--<h4 style="text-align: center;color:white;background:black">Cobros & Pagos</h4>-->
 
     <!--acciones de sistema-->
     <div>
@@ -164,19 +164,19 @@ $hora = date("G:i:s");
 
 
         ?>
-        <p>Saldo : $
+        <!--<p>Saldo : $-->
             <?php echo $saldo; ?>
             <!---buscador-->
-            <img src="../../imagenes/lupa.png" style="width: 20px;height: 20px"><input type="text" id="buscar_deudor"
-                placeholder="Buscar" onKeyUp="buscar_deudor()" value="<?php echo $_POST['buscar_deudor'] ?>" />
-        </p>
+           <!-- <img src="../../imagenes/lupa.png" style="width: 20px;height: 20px"><input type="text" id="buscar_deudor"
+                placeholder="Buscar" onKeyUp="buscar_deudor()" value="<?php echo $_POST['buscar_deudor'] ?>" />-->
+     <!--   </p>-->
     </div>
 
 
-    <a href="../../pedidos.php"><img src="../../imagenes/orden.png" style="height:30px;width:30px"></a>
+    <!--<a href="../../pedidos.php"><img src="../../imagenes/orden.png" style="height:30px;width:30px"></a>-->
 
-    <a style="color: blue;margin-left: 25px" href="info_ventas"> <a href="info_ventas.php"><img
-                src="../../imagenes/historial.png" style="height:30px;width:30px"></a></a>
+   <!-- <a style="color: blue;margin-left: 25px" href="info_ventas"> <a href="info_ventas.php"><img
+                src="../../imagenes/historial.png" style="height:30px;width:30px"></a></a>-->
     <!--saldo por cobrar-->
 
     <?php
