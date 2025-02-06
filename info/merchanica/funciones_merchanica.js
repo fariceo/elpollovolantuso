@@ -262,7 +262,7 @@ function cobros() {
 
 
 
-    $('[id^=plegar_ventana_]').hide();
+    //$('[id^=plegar_ventana_]').hide();
     //$('[id^=desplegar_ventana_]').hide();
 
     //$("id^=plegar_ventana_").hide(); // Esto no es válido, debe corregirse.
@@ -273,7 +273,11 @@ function cobros() {
 
         // Muestra el contenedor del cliente seleccionado
         $('#tareas_' + e).show();
-
+    // Alterna la visibilidad de los botones desplegar/plegar para el cliente seleccionado
+                $('#plegar_ventana_' + e).show();
+                $('#plegar_ventana_' + e).focus();
+                $('#desplegar_ventana_' + e).hide();
+                $('[id^=desplegar_ventana_]').hide();
         // Realiza la solicitud AJAX para cargar las tareas del cliente seleccionado
         $.ajax({
             type: 'POST',
@@ -284,11 +288,7 @@ function cobros() {
                 $('#tareas_' + e).html(result);
                 //$('#tareas_' + e).focus();
 
-                // Alterna la visibilidad de los botones desplegar/plegar para el cliente seleccionado
-                $('#plegar_ventana_' + e).show();
-                $('#plegar_ventana_' + e).focus();
-                $('#desplegar_ventana_' + e).hide();
-                $('[id^=desplegar_ventana_]').hide();
+            
             },
         });
 

@@ -60,11 +60,12 @@ if ($_POST['buscar_cliente'] != "") {
     while ($tareas_cliente = mysqli_fetch_array($buscar_cliente)) {
 
         ?>
-
+<hr>
         <table>
             <tr>
                 <td style="width:150px"><?php echo "<br>" . $tareas_cliente['tarea']; ?></td>
-                <td> <button style="color:red;width:10px"
+                <td></td>
+                <td style="float:right;margin-right:20px"> <button style="color:red;width:10px"
                         onclick="eliminar_tarea('<?php echo $tareas_cliente['id'] ?>')">X</button></td>
             </tr>
         </table>
