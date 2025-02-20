@@ -334,19 +334,11 @@ session_start();
 
 
 
-    /*
-    
-        $("#muestra_menu").mouseenter(function () {
-            $("#categorias").hide();  // Oculta el div cuando el cursor está encima
-        }).mouseleave(function () {
-            $("#categorias").show();  // Muestra el div cuando el cursor sale
-        });
-"
-    $("#muestra_menu").on('scroll', function () {
-        $("#categorias").hide();  // Oculta el div al hacer scroll
-    });*/
+    $(".hamburger").click(function () {
 
-
+        alert();
+   
+    });
 
 
 
@@ -357,12 +349,39 @@ session_start();
     a {
         text-decoration: none;
     }
+
+    tr{
+        background-color: #faebd7;
+        border-collapse: collapse;
+    }
+        /* Estilos para el menú hamburguesa */
+        .hamburger {
+      cursor: pointer;
+      width: 30px;
+      height: 30px;
+      //position: absolute; /* Posicionar el menú hamburguesa */
+      left: 10px; /* Ajustar la posición del menú hamburguesa */
+      top: 10px; /* Ajustar la posición del menú hamburguesa */
+      z-index: 1001; /* Asegurarse de que esté por encima de otros elementos */
+right:20px;
+      float:right;
+    }
+    .hamburger .line {
+      width: 100%;
+      height: 3px;
+      background-color: black;
+      display: block;
+      margin: 5px 0;
+      transition: all 0.3s ease-in-out;
+  
+     
+    }
 </style>
 
 <!--logo-->
-<a href="index.php" onClick="usuario()"><img src="imagenes/logo.jpeg" style="height:50px;width:50px"></a>
+<a  onClick="usuario()"><img src="imagenes/logo.jpeg" style="height:50px;width:50px"></a>
 
-
+<a href="sesion/login_volantuso.php" style="float:right;margin-right:25%"><img src="https://elpollovolantuso.com/imagenes/usuarios.png" style="width:35px;height:35px"></a>
 
 <div id="encabezado" style="display:">
     <a style="float:right;margin-right:25%" href="https://wa.me/593981770519">
@@ -466,29 +485,6 @@ session_start();
     <hr>
 </div>
 <br>
-
-
-
-
-
-<!---menu de navegacion-
-<div>
-
-
-<a href="carta.php"><img src="imagenes/chef.jpeg" style="width: 20px;height: 20px"></a>
-    <a href="menu_clientes.php"><img src="imagenes/carta.png" style="width: 20px;height: 20px"></a>
-
-    
-<a href="delivery.php"><img src="imagenes/delivery.png" style="width: 20px;height: 20px"></a>
-    
-<a href="info_pedidos.php"><img src="imagenes/camarero.jpeg" style="width: 20px;height: 20px"></a>
-    
-    
-</div>
-
--->
-
-
 
 <div>
 
@@ -607,7 +603,16 @@ session_start();
 
     </div>
 
+
+    <!-- Hamburger Menu -->
+<div class="hamburger">
+  <span class="line"></span>
+  <span class="line"></span>
+  <span class="line"></span>
+</div>
     <br>
+
+
 
     <!---categorias--->
     <div id="contenedor" style="text-align: center;);">
@@ -640,9 +645,12 @@ session_start();
 
 
                 ?>
+                <!--
             <button onClick="categorias_menu('<?php echo $categoria['categoria'] ?>','<?php echo $_POST[usuario] ?>')">
                 <?php echo $categoria['categoria'] ?>
             </button>
+
+            -->
 
             <?php }
 
@@ -699,7 +707,7 @@ session_start();
 
 
 
-        <div style="overflow-y: scroll;height: 375px" id="muestra_menu">
+        <div style="overflow-y: scroll;height: 450px" id="muestra_menu">
 
 
 
@@ -718,7 +726,7 @@ session_start();
 
                 ?>
 
-            <table style="margin: auto">
+            <table style="margin: auto;font-family: sans-serif;font-family: sans-serif;border-spacing: 0;">
                 <hr style="width:300px">
 
 
