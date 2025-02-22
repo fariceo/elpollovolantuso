@@ -8,7 +8,7 @@ session_start();
 <script>
 
     $(document).ready(function () {
-
+        $("#categorias").hide();
         let lastScrollTop = 0;  // Variable para almacenar la posición del scroll anterior
 
         $("#muestra_menu").scroll(function () {
@@ -16,16 +16,16 @@ session_start();
 
             if (currentScrollTop < lastScrollTop) {
                 // Scroll hacia arriba
-                $("#categorias").fadeIn();  // Mostrar el div
-                $("#encabezado").fadeIn();  // Mostrar el div
+               // $("#categorias").fadeIn();  // Mostrar el div
+               // $("#encabezado").fadeIn();  // Mostrar el div
                 $("#footer").fadeIn();  // Mostrar el div
 
                 // $('#footer').css('opacity','0');
 
             } else {
                 // Scroll hacia abajo
-                $("#categorias").fadeOut();  // Ocultar el div
-                $("#encabezado").fadeOut();  // Ocultar el div
+               // $("#categorias").fadeOut();  // Ocultar el div
+              //  $("#encabezado").fadeOut();  // Ocultar el div
                 $("#footer").fadeOut();  // Ocultar el div
             }
 
@@ -101,7 +101,7 @@ session_start();
                 //$("#menu_carta").css("display","none");
                 $("#categorias").fadeOut();
 
-                $("#encabezado").fadeOut();  // Ocultar el div
+               // $("#encabezado").fadeOut();  // Ocultar el div
                 // $("#footer").fadeOut();  // Ocultar el div
             }
 
@@ -115,8 +115,8 @@ session_start();
 
         if ($("#usuario").val() == "") {
 
-            alert("Debes Introducir un ID de pedido para el localizador");
-            //prompt("<?php echo $usuario_anonimo; ?>");
+            alert("Debes Introducir un ID de pedido para identificar la Orden");
+           ("#usuario").focus();
         } else {
 
 
@@ -332,14 +332,11 @@ session_start();
         });
     }
 
-
-
-    $(".hamburger").click(function () {
-
-        alert();
    
-    });
 
+    $(document).on("click", ".hamburger", function () {
+        $("#categorias").fadeIn();
+        });
 
 
 </script>
@@ -349,21 +346,27 @@ session_start();
     a {
         text-decoration: none;
     }
+table{
+    border-collapse: collapse;
+         border: 1px solid #d3a516 ;
+         
 
-    tr{
-        background-color: #faebd7;
-        border-collapse: collapse;
-    }
+         margin: auto;
+         font-family: sans-serif;
+         border-spacing: 1;
+}
+   
         /* Estilos para el menú hamburguesa */
         .hamburger {
       cursor: pointer;
       width: 30px;
       height: 30px;
-      //position: absolute; /* Posicionar el menú hamburguesa */
+      position: absolute; /* Posicionar el menú hamburguesa */
       left: 10px; /* Ajustar la posición del menú hamburguesa */
-      top: 10px; /* Ajustar la posición del menú hamburguesa */
+      top: 10%; /* Ajustar la posición del menú hamburguesa */
       z-index: 1001; /* Asegurarse de que esté por encima de otros elementos */
-right:20px;
+      margin-right:25%;
+
       float:right;
     }
     .hamburger .line {
@@ -376,17 +379,89 @@ right:20px;
   
      
     }
+
+    tr {
+     border: 2px #937200; /* Adjust the thickness (2px) and color (brown) as needed */
+     border-radius:5px;
+     margin-bottom:10px;
+     border-collapse: collapse;
+     //background-color: #a4d6ff ;
+    }
+
+    #categorias{
+
+        position:fixed;
+        left:0;
+        top:50%;
+        transform: translateY(-50%);
+        display: flex;
+        flex-direction: column;
+        padding: 10px;
+        z-indez:1000;
+        display:table;
+        background: black;
+        opacity:0.8;
+
+    }
+    #categorias button {
+    display: block; /* Make buttons block-level for vertical stacking */
+    width: 100%; /* Make buttons take up the full width of the container */
+    margin-bottom: 5px; /* Add space between buttons */
+    padding: 10px;
+    text-align: left; /* Optional: Left-align button text */
+}
+
+
+#whatsap{
+       // position: fixed; /* Make the element fixed */
+       // bottom: 90%; /* Distance from the bottom */
+      float:right; /* Distance from the right */
+      right:10px;
+        z-index: 1000; /* Ensure it's above other elements */
+        /* Optional: Add some background and padding for better visibility */
+       
+        padding: 15px;
+        border-radius: 50px; /* Make it circular */
+        //display: flex; /* Use flexbox for alignment */
+       // align-items: center; /* Center items vertically */
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Add a subtle shadow */
+        
+    }
+
+    #muestra_menu{
+
+      
+    }
 </style>
 
 <!--logo-->
 <a  onClick="usuario()"><img src="imagenes/logo.jpeg" style="height:50px;width:50px"></a>
 
-<a href="sesion/login_volantuso.php" style="float:right;margin-right:25%"><img src="https://elpollovolantuso.com/imagenes/usuarios.png" style="width:35px;height:35px"></a>
 
-<div id="encabezado" style="display:">
-    <a style="float:right;margin-right:25%" href="https://wa.me/593981770519">
-        <br>Contactanos <img src="imagenes/whatsapp.jpeg" style="width:25px;height:25px">
+<?php
+    
+    if ($_SESSION['usuario'] == "") {
+        ?>
+     ID pedido : <input type="text" id="usuario" onchange="usuario('<?php echo $_POST[categoria] ?>')" />
+
+    <?php } else {
+
+
+
+        echo "<a onClick=\"cambiar_usuario(' $_POST[categoria]')\" style='background:#E6FF71'>ID : " . $str = ucfirst($_SESSION['usuario']) . "</a><input id='usuario' type='hidden' value='$_SESSION[usuario]'/>";
+
+    }
+    ?>
+
+
+<a href="sesion/login_volantuso.php"><img src="https://elpollovolantuso.com/imagenes/usuarios.png" style="width:35px;height:35px"></a>
+<a href="https://wa.me/593981770519" id="whatsap">
+    <img src="imagenes/whatsapp.jpeg" style="width:25px;height:25px">
     </a>
+
+   
+<div id="encabezado" style="display:">
+   
 
     <?php if ($_SESSION["usuario"] != "" && $_SESSION["usuario"] != "volantuso") { ?>
         <a href="index.php"><img src="https://elpollovolantuso.com/imagenes/carta.png" style="width:25px;height:25px"></a>
@@ -418,20 +493,11 @@ right:20px;
 
 
 
+
+    
+
+
     if ($_SESSION['usuario'] == "") {
-        ?>
-        ID pedido : <input type="text" id="usuario" onchange="usuario('<?php echo $_POST[categoria] ?>')" />
-
-    <?php } else {
-
-
-
-        echo "<a onClick=\"cambiar_usuario(' $_POST[categoria]')\" style='background:#E6FF71'>ID : " . $str = ucfirst($_SESSION['usuario']) . "</a><input id='usuario' type='hidden' value='$_SESSION[usuario]'/>";
-
-
-
-
-
         /*carrito*/
         $comanda_realizada = mysqli_query($conexion, "SELECT * FROM pedidos WHERE usuario='$_SESSION[usuario]' AND estado!=2");
 
@@ -480,7 +546,6 @@ right:20px;
 
 
 
-    <a id="show_categorias"></a>
 
     <hr>
 </div>
@@ -613,15 +678,16 @@ right:20px;
     <br>
 
 
-
+    <a id="show_categorias"></a>
     <!---categorias--->
-    <div id="contenedor" style="text-align: center;);">
+    <div id="contenedor" style="text-align: center;)">
 
 
-        <div id="categorias" style="background: linear-gradient(to bottom,#f8f593, white);">
+        <div id="categorias">
 
 
 
+        
 
             <?php
             $categoriasMenu[0];
@@ -645,12 +711,12 @@ right:20px;
 
 
                 ?>
-                <!--
+                
             <button onClick="categorias_menu('<?php echo $categoria['categoria'] ?>','<?php echo $_POST[usuario] ?>')">
                 <?php echo $categoria['categoria'] ?>
             </button>
 
-            -->
+            
 
             <?php }
 
@@ -707,7 +773,7 @@ right:20px;
 
 
 
-        <div style="overflow-y: scroll;height: 450px" id="muestra_menu">
+        <div style="overflow-y: scroll;height: 450px;background:#fff3c2  " id="muestra_menu">
 
 
 
@@ -725,16 +791,15 @@ right:20px;
 
 
                 ?>
-
-            <table style="margin: auto;font-family: sans-serif;font-family: sans-serif;border-spacing: 0;">
-                <hr style="width:300px">
-
+<div style="margin-bottom: 25px;">
+            <table>
+                
 
                 <tr>
-                    <td>
+                    <td style="background:black;color:white;justify-content: center; align-items: center; height: 50px;">
 
-                        <h3>
-                            <?php echo $menu['producto']; ?>
+                        <h3 style="text-align: center;margin:0">
+                       <?php echo htmlspecialchars(ucfirst(strtolower($menu['producto']))); ?>
                         </h3>
                     </td>
                 </tr>
@@ -776,7 +841,7 @@ right:20px;
 
                 </tr>
                 <tr>
-                    <td>
+                    <td style="text-align: center;">
                         <button id='<?php echo str_replace(' ', '', $menu['producto']) ?>' style="color: green"
                             onClick="agregar('<?php echo $menu['producto'] ?>','<?php echo $_SESSION['usuario'] ?>','<?php echo $menu['precio'] ?>','<?php echo $_POST['categoria'] ?>')">Agregar</button>
                     </td>
@@ -871,6 +936,8 @@ right:20px;
                         <?php } ?>
                     </tr>
                 </table>
+
+</div>
 
             <?php } ?>
             <?php include("receta.php"); ?>
