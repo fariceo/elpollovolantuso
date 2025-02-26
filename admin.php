@@ -62,6 +62,22 @@
 	//scp root@191.162.0.2:/writing/articles/SCP.zip Users/Edward/Desktop
 	
 
+	/*
+	
+	 ```bash
+   gcloud compute scp --zone=us-central1-c brionariomen@elranchodelpollovolantuso:/home/brionariomen/myfile.txt .
+   ```
+
+   Or to copy to specific folder:
+    ```bash
+    gcloud compute scp --zone=us-central1-c brionariomen@elranchodelpollovolantuso:/var/www/elpollovolantuso/index.php /cloudshell/coding
+    ```
+   If you want to copy a directory use -r flag:
+    ```bash
+    gcloud compute scp -r --zone=us-central1-c brionariomen@elranchodelpollovolantuso:/home/brionariomen/my_directory /cloudshell
+    ```
+	*/
+
 	/*Codigo de reinicio de id sql*/
 
 	/*
