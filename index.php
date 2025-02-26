@@ -344,7 +344,67 @@ session_start();
 
 
         ///detalles del plato
+        function descripcion_plato(platoId) {
+        $.ajax({
+            type: 'POST',
+            url: 'asi_sistema/info/procesar2.php',
+            data: {get_descripcion_plato: platoId}, // Send the ID to identify the dish
+            success: function (result) {
+              mostrar_descripcion_en_menu(result,platoId);
+            }
+        });
+    }
 
+    function mostrar_descripcion_en_menu(descripcion, platoId){
+
+        var muestraMenu = $("#muestra_menu");
+        muestraMenu.empty();//clear the html
+
+        var botonVolver = $('<button>').text("Back to Menu").click(function () {
+            categorias_menu($('#categoria_actual').val(), '<?php echo $_SESSION['usuario'] ?>');
+        });
+
+        // Get the image from the plate
+        var imagenPlato = $('table[data-plato-id="' + platoId + '"] img').attr('src');
+
+        // Create image element
+        var imgElement = $('<img>').attr('src', imagenPlato);
+
+        // Style the image
+        imgElement.css({
+            'width': '150px',
+            'height': '150px',
+            'border-radius': '5%',
+            'margin': '25px'
+        });
+          // Add img in the div muestra menu
+        muestraMenu.append(imgElement);
+         //Create a div for the descripcion
+        var descripcionElement = $('<div>').html(descripcion);
+          // Add the descripcion to the div muestra menu
+        muestraMenu.append(descripcionElement);
+          //Add margin to the text
+        descripcionElement.css('margin', '25px');
+           //Add the button
+        muestraMenu.append(botonVolver);
+
+
+    }
+
+     // Event delegation for click on .detalles
+
+     /*
+     $(document).on("click", ".detalles", function (event) {
+         event.preventDefault();
+        descripcion_plato();
+     });*/
+
+       // Event delegation for click on .detalles
+    $(document).on("click", ".detalles", function (event) {
+        event.preventDefault();
+        var platoId = $(this).closest('table').data('plato-id');
+        descripcion_plato(platoId);
+    });
 </script>
 
 
@@ -826,7 +886,7 @@ table{
             } else {
 
 
-                $muestra_menu = mysqli_query($conexion, "SELECT * FROM menu WHERE categoria='$_POST[categoria]' AND estado!=0");
+                $muestra_menu = mysqli_query($conexion, "SELECT * FROM menu WHERE categoria='$_POST[categoria]' AND estado!=0 || producto='$_POST[producto]'");
             }
             while ($menu = mysqli_fetch_array($muestra_menu)) {
 
@@ -973,6 +1033,43 @@ table{
                 </table>
 
 </div>
+
+
+
+                        <!--descripcion del plato-->
+<div style="margin-bottom: 25px;">
+    <!-- Agrega un atributo data-* con el ID del plato -->
+    <table data-plato-id="<?php echo $menu['id']; ?>">
+        <tr>
+            <td style="text-align: center;">
+                <h3 style="background: black; color: white; margin: 0; padding: 10px;">
+                    <?php echo $menu['producto'] ?>
+                </h3>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a id='<?php echo str_replace(' ', '', $menu['producto'] . "img") ?>'><img
+                        src="imagenes/<?php echo $menu['img'] ?>"></a>
+            </td>
+        </tr>
+        <tr>
+            <!--detalles del plato-->
+            <td style="width: 100px;color:#818B97;text-align:center;">
+                <a class="detalles">Descripcion del plato</a>
+            </td>
+        </tr>
+        <!-- Rest of the table content -->
+         <tr>
+            <td class="price-circle">
+               <?php echo "$ " . $menu['precio'] ?>
+           </td>
+
+        </tr>
+    </table>
+</div>
+
+
 
 
 
