@@ -339,6 +339,12 @@ session_start();
         });
 
 
+
+
+
+
+        ///detalles del plato
+
 </script>
 
 
@@ -350,7 +356,7 @@ table{
     border-collapse: collapse;
          border: 1px solid #d3a516 ;
          
-
+         background:white  ;
          margin: auto;
          font-family: sans-serif;
          border-spacing: 1;
@@ -413,8 +419,8 @@ table{
 
 
 #whatsap{
-       // position: fixed; /* Make the element fixed */
-       // bottom: 90%; /* Distance from the bottom */
+        position: fixed; /* Make the element fixed */
+        top: 60%; /* Distance from the bottom */
       float:right; /* Distance from the right */
       right:10px;
         z-index: 1000; /* Ensure it's above other elements */
@@ -425,6 +431,7 @@ table{
         //display: flex; /* Use flexbox for alignment */
        // align-items: center; /* Center items vertically */
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Add a subtle shadow */
+        background:white;
         
     }
 
@@ -432,6 +439,63 @@ table{
 
       
     }
+
+
+    .price-circle {
+    display: inline-block; /* Make the span behave like a block for width/height */
+    width: 45px; /* Adjust the size of the circle */
+    height: 45px; /* Adjust the size of the circle */
+    border-radius: 50%; /* Make it a circle */
+    border: 2px solid #ffcc00; /* Adjust the color and thickness of the border */
+    text-align: center; /* Center the text horizontally */
+    line-height: 40px; /* Center the text vertically (same as height) */
+    font-weight: bold; /* Make the price stand out */
+    color: #8b5d02 ;/*text color*/
+
+
+ 
+    box-shadow: 0px 2px 10px rgba(0,0,0,0.2);/* add shadow to circle*/
+
+     /*  background-color: #dfdfdf;  /* Optionally, add a background color */
+ 
+    background: linear-gradient(to bottom,#bdbdbd, #ffffff ); /* Gradient background */
+   // background-color: #525252; /* Optionally, add a background color */
+}
+
+
+.detalles {
+  display: inline-block; /* Convierte el enlace en un bloque en línea */
+  background-color: #f0f0f0; /* Color de fondo gris claro */
+  color: #333; /* Color del texto gris oscuro */
+  padding: 8px 16px; /* Espaciado interno (arriba/abajo, izquierda/derecha) */
+  text-decoration: none; /* Elimina el subrayado del enlace */
+  border: 1px solid #ccc; /* Borde de 1px de color gris */
+  border-radius: 4px; /* Bordes redondeados */
+  cursor: pointer; /* Cambia el cursor a una mano al pasar por encima */
+  transition: background-color 0.3s, color 0.3s; /* Transiciones suaves para el color de fondo y el texto */
+  font-size: 14px; /* Tamaño de la fuente */
+  font-family: sans-serif; /* Tipo de fuente */
+  margin: 5px;
+  text-align:center;/*centrar el texto del boton*/
+}
+
+/* Estilos al pasar el cursor por encima del botón */
+.detalles:hover {
+  background-color: #e0e0e0; /* Cambia el color de fondo al pasar el cursor */
+  color: #000; /* Cambia el color del texto al pasar el cursor */
+}
+
+/* Estilos para el botón cuando está activo (presionado) */
+.detalles:active {
+  background-color: #d0d0d0; /* Cambia el color de fondo cuando se hace clic */
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2); /* Agrega una sombra interna */
+}
+
+/*opcional*/
+.detalles:focus{
+    outline: none;/*elimina el borde por defecto al tener el foco*/
+
+}
 </style>
 
 <!--logo-->
@@ -450,6 +514,13 @@ table{
 
         echo "<a onClick=\"cambiar_usuario(' $_POST[categoria]')\" style='background:#E6FF71'>ID : " . $str = ucfirst($_SESSION['usuario']) . "</a><input id='usuario' type='hidden' value='$_SESSION[usuario]'/>";
 
+
+
+
+
+          if ($_SESSION['usuario'] == 'volantuso') {
+              
+             echo  "<a href=\"admin.php\" style=\"padding-left: 20px;text-align: right\">Admin</a>";          } 
     }
     ?>
 
@@ -483,7 +554,7 @@ table{
 
 
     <?php } ?>
-
+ 
 
 
     <!--categorias-->
@@ -536,13 +607,7 @@ table{
     <a
         href="https://storage.cloud.google.com/archivos_proyectos/photoshop/72808578_30chavo69941376366372_4409039424063537152_o.jpg"></a>
 
-    <!--admin-->
-
-    <?php
-    if ($_SESSION['usuario'] == 'volantuso') {
-        ?>
-        <a href="admin.php" style="padding-left: 20px;text-align: right">Admin</a>
-    <?php } ?>
+  
 
 
 
@@ -749,31 +814,7 @@ table{
         ?>
 
 
-
-
-
-        <?php
-        if ($_POST['categoria'] == "") {
-            echo "<h5 style='text-align:center'>" . $categoriasMenu[$menu_aleatorio] . "</h5>";
-        } else {
-            // echo "<h5 style='text-align:center'>" . $_POST['categoria'] . "</h5>";
-        
-
-            echo " <script>$(\"#show_categorias\").html(\"<h5 style='text-align:center'>$_POST[categoria]</h5>\")</script>";
-        } ?>
-
-
-
-
-
-
-
-
-
-
-
-
-        <div style="overflow-y: scroll;height: 450px;background:#fff3c2  " id="muestra_menu">
+        <div style="overflow-y: scroll;height: 450px;background:#fff948   ; " id="muestra_menu">
 
 
 
@@ -793,16 +834,7 @@ table{
                 ?>
 <div style="margin-bottom: 25px;">
             <table>
-                
-
-                <tr>
-                    <td style="background:black;color:white;justify-content: center; align-items: center; height: 50px;">
-
-                        <h3 style="text-align: center;margin:0">
-                       <?php echo htmlspecialchars(ucfirst(strtolower($menu['producto']))); ?>
-                        </h3>
-                    </td>
-                </tr>
+            <tr><td style="text-align: center;"><h3 style="background: black; color: white; margin: 0; padding: 10px;"><?php echo $menu['producto'] ?></h3></td></tr>
                 <tr>
 
                     <td>
@@ -829,13 +861,16 @@ table{
 
                 </tr>
                 <tr>
-                    <td style="width: 100px;color:#818B97">
-                        <?php echo $menu['detalles']; ?>
+                        <!--detalles del plato-->
+                    <td style="width: 100px;color:#818B97;text-align:center;">
+                        <?php //echo $menu['detalles']; ?>
+
+                        <a class="detalles">Descripcion del plato</a>
                     </td>
                 </tr>
 
                 <tr>
-                    <td>
+                    <td class="price-circle">
                         <?php echo "$ " . $menu['precio'] ?>
                     </td>
 
@@ -939,6 +974,9 @@ table{
 
 </div>
 
+
+
+
             <?php } ?>
             <?php include("receta.php"); ?>
 
@@ -952,6 +990,16 @@ table{
     </div>
 
 </div>
+
+
+
+
+
+
+
+                        <!--detalles del plato-->
+
+
 
 
 <div id="footer">
