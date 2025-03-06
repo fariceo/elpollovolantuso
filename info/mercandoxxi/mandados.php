@@ -6,89 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mandados</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script>
+    <script src="funciones_mercandoxxi.js"></script>
 
-        $(document).ready(function () {
-
-
-
-        });
-
-
-
-        function enviar_datos() {
-            //alert(e)
-
-            var usuario = $("#usuario").val();
-            var producto = $("#producto").val();
-            var location = $("#location").val();
-            $.ajax({
-                type: 'POST',
-                //url:'menu_clientes.php',
-                url: 'mandados.php',
-                data: { usuario: usuario, producto: producto, location: location },
-                success: function (result) {
-                    $("body").html(result);
-                    //$("#menu_carta").css("display","none");
-                }
-
-            });
-        }
-
-        function buscar_usuario(e) {
-
-
-            $.ajax({
-                type: 'POST',
-                //url:'menu_clientes.php',              
-                url: 'mandados.php',
-                data: { usuario: e },
-                success: function (result) {
-                    $("body").html(result);
-                    //$("#menu_carta").css("display","none");
-                }
-
-            });
-
-        }
-        function cambiar_precio(e) {
-            //alert(e);
-
-            var precio=prompt("cambia precio de servicio");
-
-            $.ajax({
-                type: 'POST',
-                //url:'menu_clientes.php',              
-                url: 'mandados.php',
-                data: { cambiar_precio_id: e,cambiar_precio:precio },
-                success: function (result) {
-                    $("body").html(result);
-                    //$("#menu_carta").css("display","none");
-                }
-
-            });
-
-        }
-        //localizador
-
-        function localizador() {
-            var e = $("#localizador").val();
-//alert(e);
-            $.ajax({
-                type: 'POST',
-                //url:'menu_clientes.php',
-                url: 'mandados.php',
-                data: { localizador: e, usuario: 1 },
-                success: function (result) {
-                    $("body").html(result);
-                    //$("#menu_carta").css("display","none");
-                }
-
-            });
-        }
-
-
-    </script>
 
 </head>
 <?php
@@ -110,25 +29,37 @@ if($_POST['cambiar_precio_id']!= ""){
 
 
 <body>
-    <?php echo "hola mundo";?>
+   
     <?php
     //formulario
     
     if ($_POST["location"] != "") {
 
-        $insertar_mandado = mysqli_query($con, "INSERT INTO `mandados` (`usuario`,`producto`,`cantidad`,`location`) VALUES ('$_POST[usuario]','$_POST[producto]','$$_POST[cantidad]','$_POST[location]')");
+        $insertar_mandado = mysqli_query($con, "INSERT INTO `mandados` (`usuario`,`producto`,`cantidad`,`location`,`especificacion`,`estado`) VALUES ('$_POST[usuario]','$_POST[producto]','$$_POST[cantidad]','$_POST[location]','especificacion','0')");
     }
     ?>
 
 
+<?php
+///eliminar datos mandados
+if ($_POST["eliminar_mandado_id"] != "") {
 
+    mysqli_query($con,"UPDATE mandados SET estado=2 WHERE id='$_POST[eliminar_mandado_id]'");
+
+}
+
+?>
 
     <h3 style="text-align:center" onClick="buscar_usuario()">Ordenes</h3>
+ 
+                    <a style="float: right;"><input type="text" placeholder="Nº" id="localizador"
+                            onchange="localizador()" /></a>
+          
     <hr>
 
 
     <a id="ticket" href="ticket.php">Generar Ticket</a>
-    <div id="contenedor">
+    <div>
 
 
 
@@ -142,14 +73,13 @@ if($_POST['cambiar_precio_id']!= ""){
             <?php
             if ($_POST['usuario'] == "") {
                 ?>
+                <tr>
                 <th style="width:200px"> Usuario </th>
 
                 <th style="width:200px"> Localizacion</th>
                 <th style="width:200px"> Precio Servicio</th>
-                <tr>
-                    <td style="float: right;"><input type="text" placeholder="Nº" id="localizador"
-                            onchange="localizador()" /></td>
-                </tr>
+            </tr>
+             
                 <?php
             } else {
                 ?>
@@ -168,10 +98,10 @@ if($_POST['cambiar_precio_id']!= ""){
         //Busqueda de Mandados
         
         if ($_POST['usuario'] != "" || $_POST['localizador']) {
-            $buscar_mandados = mysqli_query($con, "SELECT * FROM mandados WHERE usuario='$_POST[usuario]' || usuario='$_POST[localizador]'");
+            $buscar_mandados = mysqli_query($con, "SELECT * FROM mandados WHERE usuario='$_POST[usuario]' || usuario='$_POST[localizador]' AND estado!=2");
 
         } else {
-            $buscar_mandados = mysqli_query($con, "SELECT * FROM mandados");
+            $buscar_mandados = mysqli_query($con, "SELECT * FROM mandados WHERE estado!=2");
         }
 
         while ($mandados = mysqli_fetch_array($buscar_mandados)) {
@@ -181,7 +111,7 @@ if($_POST['cambiar_precio_id']!= ""){
             ?>
 
         </div>
-        <div style="background:black;color:white;overflow-y: scroll;">
+        <div style="overflow-y: scroll;" id="contenedor">
             <table style="margin:auto">
                 <tr>
 
@@ -192,7 +122,7 @@ if($_POST['cambiar_precio_id']!= ""){
 
 
 
-                        <td style="width:200px" onClick="buscar_usuario('<?php echo $mandados[usuario] ?>')">
+                        <td style="width:100px;background:#999bdb" onClick="buscar_usuario('<?php echo $mandados[usuario] ?>')">
                             <?php echo $mandados['usuario']; ?>
                         </td>
 
@@ -200,10 +130,10 @@ if($_POST['cambiar_precio_id']!= ""){
 
 
 
-                        <td style="width:200px"><?php echo $mandados['producto']; ?></td>
-                        <td style="width:200px"><?php echo $mandados['location']; ?></td>
+                      <!--  <td style="width:200px;height:50px;background:#d7d7e5"><?php //echo $mandados['producto']; ?></td>-->
+                        <td style="width:100px;background:#d7d7e5"><?php echo $mandados['location']; ?></td>
 
-                        <td style="width:200px" onclick="cambiar_precio('<?php echo $mandados[id] ?>')">
+                        <td style="width:50px;background:#d7d7e5" onclick="cambiar_precio('<?php echo $mandados[id] ?>')">
                             <?php echo $mandados['precio']; ?>
                         </td>
                         <?php $total += $mandados['precio']; ?>
@@ -237,7 +167,7 @@ if($_POST['cambiar_precio_id']!= ""){
 
 
 
-
+<td onclick="eliminar_mandado('<?php echo $mandados[id] ?>')" style="width: 20px; height: 20px; background-color: red; color: white; border-radius: 5px; text-align: center; cursor: pointer;">X</td>
 
 
 
