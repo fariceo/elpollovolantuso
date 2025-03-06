@@ -344,6 +344,8 @@ session_start();
 
 
         ///detalles del plato
+
+        /*
         function descripcion_plato(platoId) {
         $.ajax({
             type: 'POST',
@@ -355,7 +357,9 @@ session_start();
         });
     }
 
-    function mostrar_descripcion_en_menu(descripcion, platoId){
+    function mostrar_descripcion_en_menu(descripcion, platoId,imageName){
+
+        alert(imageName);
 
         var muestraMenu = $("#muestra_menu");
         muestraMenu.empty();//clear the html
@@ -399,12 +403,44 @@ session_start();
         descripcion_plato();
      });*/
 
+
+     /*
        // Event delegation for click on .detalles
     $(document).on("click", ".detalles", function (event) {
         event.preventDefault();
         var platoId = $(this).closest('table').data('plato-id');
-        descripcion_plato(platoId);
+
+           // Get the image source
+    var imgSrc = $(this).closest('table').find('img').attr('src');
+    // Extract the image name from the source
+    var imageName = imgSrc.split('/').pop();
+    // Show the image name in an alert
+
+
+
+        descripcion_plato(platoId,imageName);
     });
+---------------------
+    */
+ //... other javascript code
+function descripcion_plato(e){
+    $.ajax({
+            type: "POST",
+            url: "index.php",
+            data: { categoria: 1,producto:e },
+            success: function (result) {
+                $("body").html(result)
+            }
+
+
+        });
+
+
+}
+
+//... rest of the javascript code
+
+   
 </script>
 
 
@@ -893,7 +929,7 @@ table{
 
                 ?>
 <div style="margin-bottom: 25px;">
-            <table>
+            <table data-plato-id="<?php echo $menu['id']; ?>"> 
             <tr><td style="text-align: center;"><h3 style="background: black; color: white; margin: 0; padding: 10px;"><?php echo $menu['producto'] ?></h3></td></tr>
                 <tr>
 
@@ -925,9 +961,24 @@ table{
                     <td style="width: 100px;color:#818B97;text-align:center;">
                         <?php //echo $menu['detalles']; ?>
 
-                        <a class="detalles">Descripcion del plato</a>
+                        <a class="detalles" onclick="descripcion_plato('<?php echo $menu[producto] ?>')">Descripcion del plato</a>
                     </td>
                 </tr>
+                <?php
+                if($_POST['producto']!=""){
+                    ?>
+ <tr>
+                        <!--detalles del plato-->
+                    <td style="width: 100px;color:#818B97;text-align:center;">
+                        <?php echo $menu['detalles']; ?>
+
+                        
+                    </td>
+                </tr>
+                    <?php
+                }
+                
+                ?>
 
                 <tr>
                     <td class="price-circle">
@@ -1036,38 +1087,7 @@ table{
 
 
 
-                        <!--descripcion del plato-->
-<div style="margin-bottom: 25px;">
-    <!-- Agrega un atributo data-* con el ID del plato -->
-    <table data-plato-id="<?php echo $menu['id']; ?>">
-        <tr>
-            <td style="text-align: center;">
-                <h3 style="background: black; color: white; margin: 0; padding: 10px;">
-                    <?php echo $menu['producto'] ?>
-                </h3>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <a id='<?php echo str_replace(' ', '', $menu['producto'] . "img") ?>'><img
-                        src="imagenes/<?php echo $menu['img'] ?>"></a>
-            </td>
-        </tr>
-        <tr>
-            <!--detalles del plato-->
-            <td style="width: 100px;color:#818B97;text-align:center;">
-                <a class="detalles">Descripcion del plato</a>
-            </td>
-        </tr>
-        <!-- Rest of the table content -->
-         <tr>
-            <td class="price-circle">
-               <?php echo "$ " . $menu['precio'] ?>
-           </td>
-
-        </tr>
-    </table>
-</div>
+                        <!--descripcion del platoo-->
 
 
 
