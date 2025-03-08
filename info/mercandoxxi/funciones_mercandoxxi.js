@@ -93,3 +93,21 @@ function eliminar_mandado(e){
 
     });
 }
+
+function especificacion(e){ 
+   var especificacion_mandado=$("#especificacion_tarea_"+e).val();
+  //alert(especificacion_tarea+" / "+e);
+  $.ajax({
+    type: 'POST',
+    //url:'menu_clientes.php',              
+    url: 'procesar_datos.php',
+    data: { especificacion_mandado:especificacion_mandado,id_especificacion_mandado:e},
+    success: function (result) {
+        $("body").html(result);
+        //$("#menu_carta").css("display","none");
+    }
+
+});
+
+}
+
