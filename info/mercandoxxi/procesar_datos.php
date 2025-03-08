@@ -95,3 +95,9 @@ if ($_POST["ci"] != "") {
 
 
 
+<?php
+/// especificacion del mandado
+
+especificacion_mandado=mysqli_query($conexion,"UPDATE mandados SET especificacion='$_POST[especificacion_mandado]' WHERE id='$_POST[id_especificacion_mandado]'");
+
+?>
