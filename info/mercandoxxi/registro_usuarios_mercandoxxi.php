@@ -1,3 +1,6 @@
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <?php
 include ('conexion_mercandoxxi.php'); // Archivo para conectar a la base de datos
 
@@ -23,9 +26,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 ?>
 
+<div style="text-align:center; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh;">
+
+
+<a style=""><img src="https://th.bing.com/th/id/OIP.sSXfZIqxTRZ5hFg6wgttagHaHa?w=202&h=201&c=7&r=0&o=5&pid=1.7" style="width:150px;height:150px"></a>
+
+
+
 <form method="post">
-    Usuario: <input type="text" name="usuario" required><br>
-    Nombre: <input type="text" name="nombre" required><br>
-    Contraseña: <input type="password" name="password" required><br>
+    <p>Usuario :</p> <input type="text" name="usuario" required><br>
+    <p>Nombre :</p> <input type="text" name="nombre" required><br>
+    <p>Contraseña :</p> <input type="password" name="password" required><br>
+    <p>Nombre:</p> <input type="text" name="nombre" required><br>
+    <p>Contraseña:</p> <input type="password" name="password" required><br>
     <button type="submit">Registrarse</button>
+    <br><br>
+    <a href="login_mercandoxxi.php">Iniciar sesión</a>
 </form>
+</div>
