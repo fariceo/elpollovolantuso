@@ -1,4 +1,5 @@
-                <!DOCTYPE html>
+               <?php session_start(); ?>
+               <!DOCTYPE html>
                 <html lang="en">
 
                 <head>
@@ -11,11 +12,16 @@
 
                 </head>
                 <?php
-
+                session_start();
                 //conexion 
                 $con = mysqli_connect("localhost", "root", "clave", "mercandoxxi");
                 ?>
 
+                <?php 
+                if($_SESSION["usuario"]==""){
+                 header("Location:login_mercandoxxi.php");
+                }
+                ?>
 
                 <?php
 
@@ -51,6 +57,10 @@
                 ?>
 
                     <h3 style="text-align:center" onClick="buscar_usuario()">Ordenes</h3>
+                    <div style="text-align:center;">
+
+                    <a style=""><img src="https://th.bing.com/th/id/OIP.sSXfZIqxTRZ5hFg6wgttagHaHa?w=202&h=201&c=7&r=0&o=5&pid=1.7" style="width:150px;height:150px"></a>
+                    </div>
                 
                                     <a style="float: right;"><input type="text" placeholder="Nº" id="localizador"
                                             onchange="localizador()" /></a>
