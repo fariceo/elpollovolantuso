@@ -6,7 +6,13 @@
 <?php
 include 'conexion_mercandoxxi.php'; 
 session_start();
+
+if($_SESSION["usuario"]!=""){
+    header("Location:ticket.php");
+}
 ?>
+
+
 <?php
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $usuario = $_POST['usuario'];

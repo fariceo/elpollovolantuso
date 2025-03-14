@@ -86,7 +86,7 @@
 
 
 
-                        <table style="margin:auto; margin-bottom: 20px;margin-top: 20px;background:#49482f;color:white">
+                        <table style="margin:auto; margin-bottom: 20px;margin-top: 20px;background:#98b4be;color:white">
                             <?php
                             if ($_POST['usuario'] == "") {
                                 ?>
@@ -211,6 +211,7 @@
 
                                         <td style="width:200px"><?php echo $mandados['especificacion']; ?></td>
                                         </tr>
+                                        <tr style="background: #f7f7f7 ;"><td><?php echo $mandados['location']; ?></td></tr>
                                     <?php
 
                                     }

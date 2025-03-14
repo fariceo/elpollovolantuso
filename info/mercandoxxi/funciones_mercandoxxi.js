@@ -6,24 +6,60 @@ $(document).ready(function () {
 });
 
 
-
+/*
 function enviar_datos() {
     //alert(e)
 
     var usuario = $("#usuario").val();
     var producto = $("#producto").val();
+    var cantidad = $("#cantidad").val();
+    var location = $("#producto").val();
     var location = $("#location").val();
+    var especificacion=$("#especificacion_tarea").val();
     $.ajax({
         type: 'POST',
         //url:'menu_clientes.php',
         url: 'mandados.php',
-        data: { usuario: usuario, producto: producto, location: location },
+        data: { usuario: usuario, producto: producto, location: location,especificacion:especificacion,cantidad:cantidad},
         success: function (result) {
             $("body").html(result);
             //$("#menu_carta").css("display","none");
         }
 
     });
+}
+*/
+function enviar_datos() {
+
+    var usuario = $("#usuario").val();
+    var producto = $("#producto").val();
+    var especificacion_tarea=$("#especificacion_tarea").val();
+    var cantidad = $("#cantidad").val();
+    var location = $("#location").val();
+
+
+    if ($("#usuario").val() != "" && $("#producto").val() != "" && $("#cantidad").val != "" && $("#location").val() != "") {
+
+
+
+
+        $.ajax({
+            type: 'POST',
+            //url:'menu_clientes.php',
+            url: 'procesar_datos.php',
+            data: { enviar_datos: 1, usuario: usuario, producto: producto, cantidad: cantidad, precio: 0, location: location, localizador: 1, especificacion: especificacion_tarea },
+            success: function (result) {
+                $("body").html(result);
+                //$("#menu_carta").css("display","none");
+            }
+
+        });
+    } else {
+
+        alert("Introduce usuario");
+
+    }
+
 }
 
 function buscar_usuario(e) {
@@ -111,3 +147,9 @@ function especificacion(e){
 
 }
 
+
+////procesar_datos
+
+function agregar(e){
+    alert(e);
+}

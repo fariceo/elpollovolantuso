@@ -4,6 +4,8 @@
 include '../conexion.php'; 
 session_start();
 
+
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $usuario = $_POST['usuario'];
     $password = $_POST['password'];
