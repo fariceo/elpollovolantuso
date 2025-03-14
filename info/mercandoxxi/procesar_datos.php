@@ -3,6 +3,8 @@
 <?php
 
 $conexion = mysqli_connect("localhost", "root", "clave", "mercandoxxi");
+$conexion2 = mysqli_connect("localhost", "root", "clave", "volantuso");
+
 
 include("conexion.php");
 ?>
@@ -14,7 +16,7 @@ include("conexion.php");
 ////buscar productos
 if ($_POST['buscar_producto'] != "") {
 
-    $buscar_producto_menu = mysqli_query($conexion, "SELECT * FROM gastos WHERE producto like '%" . $_POST['buscar_producto'] . "%'");
+    $buscar_producto_menu = mysqli_query($conexion2, "SELECT * FROM gastos WHERE producto like '%" . $_POST['buscar_producto'] . "%'");
 
     ?>
     <br>
@@ -60,7 +62,7 @@ if ($_POST['enviar_datos'] != "") {
 
 
 
-    $insertar_mandado = mysqli_query($conexion, "INSERT INTO `mandados` (`usuario`,`producto`,`cantidad`,`precio`,`location`,`localizador`,`especificacion`,`estado`) VALUES ('$_POST[usuario]','$_POST[producto]','$_POST[cantidad]','$_POST[precio]','$_POST[location]','$_POST[localizador]','$_POST[especificacion]','0')");
+    $insertar_mandado = mysqli_query($conexion, "INSERT INTO `mandados` (`usuario`,`producto`,`cantidad`,`precio`,`location`,`localizador`,`especificacion`,`estado`) VALUES ('$_POST[usuario]','$_POST[producto]','$_POST[cantidad]','1','$_POST[location]','$_POST[localizador]','$_POST[especificacion]','0')");
 
 
 }
