@@ -2,7 +2,9 @@
 <script src="funciones_mercandoxxi.js"></script>
 <?php
 
-$conect = mysqli_connect("localhost", "root", "clave", "volantuso");
+$conexion = mysqli_connect("localhost", "root", "clave", "mercandoxxi");
+$conexion2 = mysqli_connect("localhost", "root", "clave", "volantuso");
+
 
 include("conexion.php");
 ?>
@@ -14,7 +16,7 @@ include("conexion.php");
 ////buscar productos
 if ($_POST['buscar_producto'] != "") {
 
-    $buscar_producto_menu = mysqli_query($conect, "SELECT * FROM gastos WHERE producto like '%" . $_POST['buscar_producto'] . "%'");
+    $buscar_producto_menu = mysqli_query($conexion2, "SELECT * FROM gastos WHERE producto like '%" . $_POST['buscar_producto'] . "%'");
 
     ?>
     <br>
@@ -60,7 +62,7 @@ if ($_POST['enviar_datos'] != "") {
 
 
 
-    $insertar_mandado = mysqli_query($conexion, "INSERT INTO `mandados` (`usuario`,`producto`,`cantidad`,`precio`,`location`,`localizador`,`especificacion`) VALUES ('$_POST[usuario]','$_POST[producto]','$_POST[cantidad]','$_POST[precio]','$_POST[location]','$_POST[localizador]','$_POST[especificacion]')");
+    $insertar_mandado = mysqli_query($conexion, "INSERT INTO `mandados` (`usuario`,`producto`,`cantidad`,`precio`,`location`,`localizador`,`especificacion`,`estado`) VALUES ('$_POST[usuario]','$_POST[producto]','$_POST[cantidad]','1','$_POST[location]','$_POST[localizador]','$_POST[especificacion]','0')");
 
 
 }
@@ -90,4 +92,14 @@ if ($_POST["ci"] != "") {
     $insertar_registro = mysqli_query($conexion, "INSERT INTO `usuarios` (`usuario`,`ci`,`telefono`,`email`,`roll`,`pasword`,`localidad`) VALUES ('$_POST[usuario]','$_POST[ci]','$_POST[telefono]','$_POST[email]','$_POST[roll]','$_POST[password]','$_POST[localidad]')");
     echo "<p>Registro de usuario con exito</p>";
 }
+?>
+
+
+
+
+<?php
+/// especificacion del mandado
+
+$especificacion_mandado=mysqli_query($conexion,"UPDATE mandados SET especificacion='$_POST[especificacion_mandado]' WHERE id='$_POST[id_especificacion_mandado]'");
+
 ?>
