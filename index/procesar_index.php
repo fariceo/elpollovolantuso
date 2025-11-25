@@ -1,21 +1,83 @@
 <?php
 header("Content-Type: application/json");
 include("../conexion.php");
+
+// LEER JSON
 $data = json_decode(file_get_contents("php://input"), true);
-if (!$data) exit(json_encode(['success'=>false,'mensaje'=>'No hay datos']));
-extract($data);
-if (!$usuario||!$producto||$cantidad<1||$precio<=0) {
-  exit(json_encode(['success'=>false,'mensaje'=>'Datos inválidos']));
+
+if (!$data) {
+    exit(json_encode([
+        'success' => false,
+        'mensaje' => 'No se recibieron datos'
+    ]));
 }
-$sql="INSERT INTO pedidos(usuario,producto,cantidad,precio,total,estado,delivery,metodo_pago,fecha,hora)
-      VALUES(?,?,?,?,?,?,?,?,?,?)";
-$stmt=$conexion->prepare($sql);
-$stmt->bind_param("ssiddissss",$usuario,$producto,$cantidad,$precio,$total,$estado,$delivery,$metodo_pago,$fecha,$hora);
+
+// Sanitizar
+$usuario   = trim($data['usuario'] ?? '');
+$producto  = trim($data['producto'] ?? '');
+$precio    = floatval($data['precio'] ?? 0);
+$cantidad  = intval($data['cantidad'] ?? 0);
+$total     = $precio * $cantidad;
+
+// Valores por defecto
+$estado       = 1;                  // Pendiente
+$delivery     = 0;                  // Para llevar por defecto
+$metodo_pago  = "pendiente";        // O "efectivo"
+$fecha        = date("Y-m-d");
+$hora         = date("H:i:s");
+
+// VALIDACIONES
+if ($usuario == "" || strtolower($usuario) == "invitado" || $usuario == "0") {
+    exit(json_encode([
+        'success' => false,
+        'mensaje' => 'Debe ingresar un ID válido para continuar'
+    ]));
+}
+
+
+if ($producto == "" || $precio <= 0 || $cantidad < 1) {
+    exit(json_encode([
+        'success' => false,
+        'mensaje' => 'Datos inválidos'
+    ]));
+}
+
+// INSERTAR PEDIDO
+$sql = "INSERT INTO pedidos(usuario,producto,cantidad,precio,total,estado,delivery,metodo_pago,fecha,hora)
+        VALUES (?,?,?,?,?,?,?,?,?,?)";
+
+$stmt = $conexion->prepare($sql);
+$stmt->bind_param(
+    "ssiddissss",
+    $usuario,
+    $producto,
+    $cantidad,
+    $precio,
+    $total,
+    $estado,
+    $delivery,
+    $metodo_pago,
+    $fecha,
+    $hora
+);
+
 if (!$stmt->execute()) {
-  exit(json_encode(['success'=>false,'mensaje'=>$stmt->error]));
+    exit(json_encode([
+        'success' => false,
+        'mensaje' => 'Error al guardar: '.$stmt->error
+    ]));
 }
-$count=$conexion->prepare("SELECT COUNT(*) AS total FROM pedidos WHERE usuario=? AND estado!=2");
-$count->bind_param("s",$usuario);
+
+// CONTAR PRODUCTOS EN CARRITO
+$count = $conexion->prepare("SELECT COUNT(*) AS total FROM pedidos WHERE usuario=? AND estado!=2");
+$count->bind_param("s", $usuario);
 $count->execute();
-$total = $count->get_result()->fetch_assoc()['total'];
-echo json_encode(['success'=>true,'totalPedidos'=>$total]);
+$totalPedidos = $count->get_result()->fetch_assoc()['total'];
+
+echo json_encode([
+    'success' => true,
+    'mensaje' => 'Producto agregado',
+    'totalPedidos' => $totalPedidos
+]);
+
+?>
