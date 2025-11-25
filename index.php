@@ -26,10 +26,13 @@ if ($row = mysqli_fetch_assoc($result)) {
 
 </head>
 <body>
+
   <h2 id="textoEncabezado">
     <a href="admin.php"><img id="imgLogo" src="imagenes/logo.jpeg"></a>
     Menú del Restaurante
   </h2>
+
+
 
   <button id="btnMenuHamburguesa">
     <i class="fas fa-utensils"></i>
@@ -47,6 +50,7 @@ if ($row = mysqli_fetch_assoc($result)) {
     $res = $consulta->get_result()->fetch_assoc();
     $pendientes = $res['cantidad'];
     ?>
+    
     <div class="carrito">
       <div id="n_productos"><?=$pendientes?></div>
       <a href="asi_sistema/info/carrito/carrito.php">🛒</a>
@@ -59,6 +63,10 @@ if ($row = mysqli_fetch_assoc($result)) {
       <div id="errorPedidoId"></div>
     </div>
   <?php endif; ?>
+
+
+
+
 
   <div id="menuLateral">
     <button id="cerrarMenu">&times; Cerrar</button>
