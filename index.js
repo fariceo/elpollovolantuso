@@ -31,6 +31,8 @@ function cargarCategorias() {
             // Intentar mostrar categoría inicial aleatoria primero
             mostrarPorCategoria(categoriaInicial, data);
         });
+
+  
 }
 
 // Mostrar productos por categoría
@@ -53,9 +55,47 @@ function mostrarPorCategoria(cat, categoriasDisponibles = []) {
         });
 
     document.getElementById('menuLateral').style.display = 'none';
+
+            // ⬅️ MOSTRAR BOTÓN DE NUEVO
+    document.getElementById('btnMenuHamburguesa').style.display = 'block';
 }
 
 
+// ================================
+// MODAL DETALLES DEL PRODUCTO
+// ================================
+
+document.addEventListener('click', e => {
+
+    const img = e.target.closest('.productoImagen');
+    if (!img) return;
+
+    const modal = document.getElementById('modalDetalles');
+
+    document.getElementById('detalleNombre').textContent = img.dataset.producto;
+    document.getElementById('detalleDescripcion').textContent = img.dataset.detalles;
+    document.getElementById('detalleTiempo').textContent = img.dataset.tiempo;
+
+    if (img.dataset.img) {
+        document.getElementById('detalleImg').src = "imagenes/" + img.dataset.img;
+    } else {
+        document.getElementById('detalleImg').src = "";
+    }
+
+    modal.style.display = "flex";
+});
+
+// Cerrar modal al hacer clic en X
+document.getElementById('cerrarDetalles').onclick = () => {
+    document.getElementById('modalDetalles').style.display = "none";
+};
+
+// Cerrar modal al hacer clic fuera de la ventana
+document.getElementById('modalDetalles').addEventListener('click', e => {
+    if (e.target.id === "modalDetalles") {
+        e.target.style.display = "none";
+    }
+});
 
   // CLICK EN BOTÓN "AGREGAR"
 document.addEventListener('click', e => {
@@ -151,6 +191,8 @@ document.getElementById('btnConfirmarCantidad').addEventListener('click', () => 
     // Menú lateral
     document.getElementById('btnMenuHamburguesa').addEventListener('click', () => {
         document.getElementById('menuLateral').style.display = 'block';
+        document.getElementById('btnMenuHamburguesa').style.display = 'none';  // 👈 se oculta
+
     });
 
     document.getElementById('cerrarMenu').addEventListener('click', () => {
@@ -211,3 +253,23 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 });
+
+
+  const btnInfo = document.getElementById("btnInfo");
+  const modalInfo = document.getElementById("modalInfo");
+  const cerrarInfo = document.getElementById("cerrarInfo");
+
+  btnInfo.onclick = () => {
+    modalInfo.style.display = "flex";
+  }
+
+  cerrarInfo.onclick = () => {
+    modalInfo.style.display = "none";
+  }
+
+  // Cerrar si el usuario hace clic fuera del modal
+  window.onclick = (e) => {
+    if (e.target === modalInfo) {
+      modalInfo.style.display = "none";
+    }
+  }

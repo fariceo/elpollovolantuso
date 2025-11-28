@@ -61,7 +61,7 @@ if ($row = mysqli_fetch_assoc($result)) {
 
     <!-- Formulario para ingresar usuario -->
     <div class="login-id">
-      <label for="pedidoId">ID del Pedido:</label>
+      
       <input type="text" id="pedidoId" placeholder="Ingrese tu ID">
       <button id="guardarUsuario">Intro</button>
       <div id="errorPedidoId"></div>
@@ -76,7 +76,7 @@ if ($row = mysqli_fetch_assoc($result)) {
   </div>
 
   <!-- Tabla -->
-  <div class="tabla-wrapper" style="height: 500px; overflow-y: auto; overflow-x: hidden;">
+  <div class="tabla-wrapper">
     <table id="tablaMenu"><tbody></tbody></table>
   </div>
 
@@ -108,55 +108,141 @@ if ($row = mysqli_fetch_assoc($result)) {
   </div>
 
 
-  
-  <!-- Botones de contacto flotantes -->
-<div id="contactoFijo" style="position: fixed; bottom: 20px; right: 20px; display: flex; flex-direction: column; gap: 10px; z-index: 9999;">
-  <!-- WhatsApp -->
-  <a href="https://wa.me/593981770519" target="_blank"
-     class="boton-flotante whatsapp">
-    <i class="fab fa-whatsapp" style="margin-right: 8px;"></i> WhatsApp
-  </a>
+  <!-- Botones de contacto flotantes --> <div id="contactoFijo"> <!-- Botón Información --> <button id="btnInfo" class="boton-flotante info"> <i class="fas fa-info-circle" style="margin-right: 8px;"></i> Info </button> <!-- WhatsApp --> <a href="https://wa.me/593981770519" target="_blank" class="boton-flotante whatsapp"> <i class="fab fa-whatsapp" style="margin-right: 8px;"></i> WhatsApp </a> <!-- Messenger --> <a href="https://m.me/elpollovolantuso" target="_blank" class="boton-flotante messenger"> <i class="fab fa-facebook-messenger" style="margin-right: 8px;"></i> Messenger </a> </div> <style> /* Contenedor fijo con transición para ocultar */ #contactoFijo { position: fixed; bottom: 20px; right: 20px; display: flex; flex-direction: row; gap: 10px; z-index: 9999; transition: transform 0.3s ease, opacity 0.3s ease; } #contactoFijo.oculto { transform: translateY(100px); opacity: 0; pointer-events: none; } /* Estilo general de los botones */ .boton-flotante { padding: 12px 16px; border-radius: 50px; text-align: center; text-decoration: none; font-weight: bold; box-shadow: 0 2px 6px rgba(0,0,0,0.3); color: white; display: inline-flex; align-items: center; justify-content: center; transition: transform 0.2s ease, box-shadow 0.2s ease; animation: flotar 2.5s ease-in-out infinite; } /* Diferenciar colores */ .boton-flotante.info { background-color: #789c08; } .boton-flotante.whatsapp { background-color: #25D366; } .boton-flotante.messenger { background-color: #0084FF; } /* Animación flotante */ @keyframes flotar { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-5px); } } /* Efecto hover */ .boton-flotante:hover { transform: translateY(-5px) scale(1.05); box-shadow: 0 4px 12px rgba(0,0,0,0.4); } </style> <script> const botonesFlotantes = document.getElementById("contactoFijo"); let ultimoScroll = window.scrollY; window.addEventListener("scroll", () => { const scrollTop = window.scrollY; const scrollHeight = document.documentElement.scrollHeight; const clientHeight = document.documentElement.clientHeight; if (scrollTop > ultimoScroll) { // Scroll hacia abajo → ocultar botonesFlotantes.classList.add("oculto"); } else { // Scroll hacia arriba → mostrar botonesFlotantes.classList.remove("oculto"); } // Si estamos al final de la página, ocultar sí o sí if (scrollTop + clientHeight >= scrollHeight - 10) { botonesFlotantes.classList.add("oculto"); } ultimoScroll = scrollTop; }); </script>
 
-  <!-- Messenger -->
-  <a href="https://m.me/elpollovolantuso" target="_blank"
-     class="boton-flotante messenger">
-    <i class="fab fa-facebook-messenger" style="margin-right: 8px;"></i> Messenger
-  </a>
+
+
+<!-- MODAL DETALLES PRODUCTO -->
+<div id="modalDetalles" style="
+    display:none;
+    position:fixed;
+    top:0; left:0;
+    width:100%; height:100%;
+    background:rgba(0,0,0,0.7);
+    justify-content:center;
+    align-items:center;
+    z-index:99999;
+">
+
+    <div style="
+        background:white;
+        width:90%;
+        max-width:420px;
+        height:570px;             /* <-- TAMAÑO FIJO */
+        padding:20px;
+        border-radius:15px;
+        text-align:center;
+        position:relative;
+        box-sizing:border-box;
+        overflow:hidden;          /* Evita que el contenido empuje el tamaño */
+    ">
+
+        <!-- BOTÓN CERRAR CIRCULAR -->
+        <span id="cerrarDetalles"
+            style="
+                position:absolute;
+                top:10px;
+                right:10px;
+                width:38px;
+                height:38px;
+                background:#ff1a1a;
+                color:white;
+                border-radius:50%;
+                display:flex;
+                justify-content:center;
+                align-items:center;
+                font-size:20px;
+                font-weight:bold;
+                cursor:pointer;
+                box-shadow:0 0 10px rgba(0,0,0,0.5);
+                transition:0.2s;
+            "
+            onmouseover="this.style.background='#ff4d4d'; this.style.transform='scale(1.12)';"
+            onmouseout="this.style.background='#ff1a1a'; this.style.transform='scale(1)';"
+        >✖</span>
+
+        <!-- IMAGEN AJUSTADA UNIFORME -->
+        <img id="detalleImg"
+            src=""
+            style="
+                width:100%;
+                height:240px;
+                object-fit:cover;      /* Ajusta siempre igual */
+                border-radius:12px;
+                margin-bottom:15px;
+            ">
+
+        <h2 id="detalleNombre"></h2>
+
+        <p id="detalleDescripcion"
+            style="font-size:15px; margin:10px 0; padding:0 10px; max-height:90px; overflow-y:auto;">
+        </p>
+
+        <p style="font-size:16px; margin-top:15px;">
+            <strong>⏱ Tiempo de elaboración:</strong> 
+            <span id="detalleTiempo"></span>
+        </p>
+
+    </div>
 </div>
+<!---Footer-->
+<!-- Modal Información -->
+<div id="modalInfo" class="modal-info">
+  <div class="modal-contenido">
+    <span id="cerrarInfo" class="cerrar-info">&times;</span>
 
-<style>
-/* Estilo general de los botones */
-.boton-flotante {
-    padding: 12px 16px;
-    border-radius: 50px;
-    text-align: center;
-    text-decoration: none;
-    font-weight: bold;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-    color: white;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-    animation: flotar 2.5s ease-in-out infinite;
-}
+    <h2>Información</h2>
 
-/* Diferenciar colores */
-.boton-flotante.whatsapp { background-color: #25D366; }
-.boton-flotante.messenger { background-color: #0084FF; }
+    <p><strong>📍 Dirección:</strong> Ciudad, Ecuador</p>
+    <p><strong>⏰ Horario:</strong> 10:00 AM – 10:00 PM</p>
+    <p><strong>📞 Teléfono:</strong> 098 177 0519</p>
+    <p><strong>📧 Correo:</strong> info@elpollovolantuso.com</p>
 
-/* Animación flotante */
-@keyframes flotar {
-    0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-5px); }
-}
+    <p style="margin-top: 10px; font-size: 14px; opacity: 0.8;">
+      © <span id="year"></span> El Pollo Volantuso — Todos los derechos reservados.
+    </p>
+    <script>
+  document.getElementById("year").textContent = new Date().getFullYear();
+</script>
 
-/* Efecto hover */
-.boton-flotante:hover {
-    transform: translateY(-5px) scale(1.05);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
-}
-</style>
+  </div>
+</div>
+<footer id="footerSitio">
+  <div class="footer-contenido">
+    <div class="footer-logo">
+      <h2>El Pollo Volantuso</h2>
+      <p>Comida al carbón • Delivery • Take Away</p>
+    </div>
+
+    <div class="footer-contacto">
+      <p>Teléfono: <a href="tel:+593981770519">098 177 0519</a></p>
+      <p>Email: <a href="mailto:contacto@elpollovolantuso.com">contacto@elpollovolantuso.com</a></p>
+    </div>
+
+    <div class="footer-redes">
+      <a href="https://wa.me/593981770519" target="_blank" title="WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+      </a>
+      <a href="https://m.me/tuPagina" target="_blank" title="Messenger">
+        <i class="fab fa-facebook-messenger"></i>
+      </a>
+      <a href="#" target="_blank" title="Instagram">
+        <i class="fab fa-instagram"></i>
+      </a>
+    </div>
+
+    <p class="footer-copy">
+      © <span id="footerYear"></span> Todos los derechos reservados.
+    </p>
+  </div>
+</footer>
+
+<script>
+  // Actualizar automáticamente el año
+  document.getElementById("footerYear").textContent = new Date().getFullYear();
+</script>
+
+
 
 </body>
 </html>
